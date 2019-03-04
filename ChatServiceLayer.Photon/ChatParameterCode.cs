@@ -1,0 +1,37 @@
+namespace ChatServiceLayer.Photon
+{
+	public enum ChatParameterCode : byte
+	{
+		Guid,
+		ChannelType,
+		Text,
+		ChannelName,
+		Language,
+		Sender,
+		IsDeveloper,
+		Receiver,
+		Date,
+		Type,
+		Added,
+		Duration,
+		IsMod,
+		IsAdmin,
+		Result,
+		UserNames,
+		Password,
+		ChannelInfo,
+		SubscribedChannels,
+		RequiresPassword,
+		ChannelNames,
+		IsPublicChannel,
+		UserName,
+		PlayerState,
+		UseCustomAvatar,
+		AvatarId,
+		CustomAvatarBytes,
+		CanSendPrivateMessage,
+		HasBeenSuspended,
+		ChatLocation,
+		DisplayName
+	}
+}

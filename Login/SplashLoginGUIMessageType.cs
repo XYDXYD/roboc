@@ -1,0 +1,34 @@
+namespace Login
+{
+	public enum SplashLoginGUIMessageType
+	{
+		PlayVideo,
+		StopVideo,
+		EnterUsernameTextEntryFieldChanged,
+		EnterPasswordTextEntryFieldChanged,
+		ChangedTextEntryContainsProfanity,
+		ChangedTextEntryIsValid,
+		UsernameSubmitted,
+		ErrorButtonOKPressed,
+		ErrorButtonCancelPressed,
+		ErrorButtonQuitPressed,
+		ErrorButtonRetryPressed,
+		UsernameAndPasswordSubmitted,
+		ShowImage,
+		HideImage,
+		ShowTitle,
+		ChangedTextEntryIsTooLong,
+		ChangedTextEntrySomeOtherError,
+		ChangedTextEntryIsTooShort,
+		ChangedTextEntryNameInUse,
+		ShowSimpleLanguageSelector,
+		SteamLoginButtonClicked,
+		LauncherLoginButtonClicked,
+		ForgotPasswordClicked,
+		RememberMeStateToggled,
+		RegisterANewAccount,
+		OKButtonClicked,
+		CancelButtonClicked,
+		SendEmail
+	}
+}

@@ -1,0 +1,22 @@
+public enum InGameStatId
+{
+	None,
+	DestroyedCubes,
+	DestroyedCubesInProtection,
+	DestroyedCubesDefendingTheBase,
+	Kill,
+	KillAssist,
+	HealCubes,
+	HealAssist,
+	DestroyedProtoniumCubes,
+	BaseCaptureClassicMode,
+	RobotDestroyed,
+	Score,
+	HealthPercentageBonusClassicMode,
+	Points,
+	CurrentKillStreak,
+	BestKillStreak,
+	CapturePointBattleArenaMode,
+	EqualiserDestroyedBattleArenaMode,
+	BattleArenaObjectives
+}

@@ -1,0 +1,32 @@
+namespace Login
+{
+	internal enum LoginSequenceStage
+	{
+		IntroVideo,
+		WaitVideoFinished,
+		LoadConfigData,
+		PreCheckMaintenanceMode,
+		ReadyPlatform,
+		ConfigureAndShowLoginDialog,
+		WaitForLauncherLoginEntry,
+		FindSteamUser,
+		StoreUserLoginInfo,
+		CheckUserRegistrationState,
+		PostLoginSuccess,
+		TryLoginWithIdentifierAndPassword,
+		WaitForUserToRegisterNewSteamDisplayName,
+		TryRegisterNewSteamUserWithDisplayName,
+		WaitingSharedLoginFinalise,
+		AskUserForNewsletter,
+		ResendUserEmailNewsletter,
+		MailSentNewsletter,
+		CheckDisplayNameChange,
+		WaitForUserToEnterNewDisplayaNameForExistingAccount,
+		TryChangeExistingDisplayName,
+		UserUnconfirmed,
+		ResendUserEmailVerify,
+		MailSentRegistration,
+		QuitGameDialog,
+		Finished
+	}
+}

@@ -1,0 +1,31 @@
+namespace Robocraft.GUI
+{
+	public enum MessageType
+	{
+		RefreshData,
+		NextListPage,
+		PreviousListPage,
+		ButtonClicked,
+		TextEntrySubmitted,
+		ButtonWithinListClicked,
+		Disable,
+		Enable,
+		Show,
+		Hide,
+		TextEntryChanged,
+		OnFocus,
+		OnUnfocus,
+		SetData,
+		PopUpListChanged,
+		SetScroll,
+		UpdateView,
+		SetFocus,
+		SetUnfocus,
+		MouseEnter,
+		MouseLeave,
+		TickBoxSet,
+		TickBoxCleared,
+		SliderValueAdjusting,
+		SliderValueConfirmed
+	}
+}

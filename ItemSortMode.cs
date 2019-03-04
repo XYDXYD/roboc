@@ -1,0 +1,9 @@
+public enum ItemSortMode
+{
+	SUGGESTED,
+	COMBAT_RATING,
+	COSMETIC_RATING,
+	ADDED,
+	CPU,
+	MOST_BOUGHT
+}
