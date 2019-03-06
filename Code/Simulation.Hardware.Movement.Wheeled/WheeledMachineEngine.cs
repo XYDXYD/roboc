@@ -480,7 +480,7 @@ namespace Simulation.Hardware.Movement.Wheeled
 		}
 
 		private static void ApplyVerticalDampingForceThreadSafe(WheeledMachineNode node, FasterList<TorqueStruct> torques)
-		{f
+		{
 			RigidbodyThreadSafe rBTS = node.rigidbodyComponentThreadSafe.RBTS;
 			TransformThreadSafe tTS = node.transformComponentThreadSafe.TTS;
 			float num = Vector3.Dot(rBTS.angularVelocity, tTS.right);  // ¸©Ñö½ÇËÙ¶È£¿

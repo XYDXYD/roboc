@@ -165,7 +165,7 @@ namespace Simulation
 				InitialiseLeg(leg);
 			}
 			DecideIfCrouching(leg);
-			if (_functionalsEnabled)
+			if (_functionalsEnabled)  // 腿有效
 			{
 				UpdateTargetGroundedPosition(leg, deltaTime);
 			}
@@ -175,14 +175,6 @@ namespace Simulation
 
 		private void InitialiseLeg(CubeLeg leg)
 		{
-			//IL_0012: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0017: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0039: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0040: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0046: Unknown result type (might be due to invalid IL or missing references)
 			leg.legData.initialised = true;
 			leg.legData.currentVelocity = Vector3.get_zero();
 			leg.legData.currentSpeed = 0f;
@@ -191,31 +183,6 @@ namespace Simulation
 
 		private void ApplyForces(CubeLeg leg)
 		{
-			//IL_0022: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0027: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0038: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0040: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0046: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0049: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0053: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0054: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0058: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0062: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0067: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0068: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0070: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0075: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0076: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0079: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0083: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008c: Unknown result type (might be due to invalid IL or missing references)
 			ProcessStoppedState(leg);
 			if (!leg.legData.jumping && !_justJumped)
 			{
@@ -225,7 +192,7 @@ namespace Simulation
 					val += ApplyStandingForce(leg);
 					val += ApplyStandingDamping(leg);
 					val += ApplyLateralForce(leg, _inputVector);
-					val += ApplyStoppedForce(leg);
+					val += ApplyStoppedForce(leg); // 停地上？
 					val += ApplySwaggerForce(leg);
 				}
 				_rb.AddForceAtPosition(val, leg.forcePoint);
@@ -332,12 +299,6 @@ namespace Simulation
 
 		private void ProcessStoppedState(CubeLeg leg)
 		{
-			//IL_0042: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0047: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0098: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ae: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b3: Unknown result type (might be due to invalid IL or missing references)
 			if ((_legacyControls || leg.legData.jumping || _justJumped || !leg.legData.legGrounded) && !_legacyControls)
 			{
 				return;
@@ -361,18 +322,6 @@ namespace Simulation
 
 		private Vector3 ApplyStandingForce(CubeLeg leg)
 		{
-			//IL_000d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0012: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0017: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0043: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0044: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0056: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0060: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0061: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 val = leg.movement.maxUpwardsForce * GetClingDirection(leg);
 			float num = Vector3.Dot(Vector3.get_up(), val.get_normalized());
 			num = (num + 1f) * 0.5f;
@@ -385,13 +334,6 @@ namespace Simulation
 
 		private Vector3 ApplyStandingDamping(CubeLeg leg)
 		{
-			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0087: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0093: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0098: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0099: Unknown result type (might be due to invalid IL or missing references)
 			float num = Vector3.Dot(leg.legData.currentVelocity, leg.up);
 			float num2 = 1f - 1f / leg.legData.targetHeight * Mathf.Clamp(Mathf.Abs(_distToGround - leg.legData.targetHeight), 0f, leg.legData.targetHeight);
 			float num3 = Mathf.Clamp(leg.movement.upwardsDampingForce * num, 0f - leg.movement.maxDampingForce, leg.movement.maxDampingForce);
@@ -400,16 +342,13 @@ namespace Simulation
 
 		private Vector3 GetClingDirection(CubeLeg leg)
 		{
-			//IL_0023: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0040: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0057: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0067: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0090: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ad: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00da: Unknown result type (might be due to invalid IL or missing references)
-			if (_distToGround < leg.legData.targetHeight - leg.movement.idealHeightRange)
+            //up = T.get_forward();
+            //down = -T.get_forward();
+            //right = -T.get_right();
+            //left = T.get_right();
+            //forward = T.get_up();
+            //back = -T.get_up();
+            if (_distToGround < leg.legData.targetHeight - leg.movement.idealHeightRange)
 			{
 				return leg.up;
 			}
@@ -430,10 +369,6 @@ namespace Simulation
 
 		private Vector3 ApplyLateralForce(CubeLeg leg, Vector4 inputVector)
 		{
-			//IL_000d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0016: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0017: Unknown result type (might be due to invalid IL or missing references)
 			if (_legacyControls)
 			{
 				return ApplyLegacyLateralForce(leg, inputVector);
@@ -443,43 +378,13 @@ namespace Simulation
 
 		private Vector3 ApplyLegacyLateralForce(CubeLeg leg, Vector4 inputVector)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0021: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0024: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0025: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0026: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0027: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0031: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0035: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0036: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0037: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0041: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0042: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0046: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0047: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0051: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0054: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0064: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0073: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0078: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0087: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008d: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 val = Vector3.get_zero();
-			CalculateLegacyMovementDirection(leg, out Vector3 forwardDirection, out Vector3 leftDirection);
+			CalculateLegacyMovementDirection(leg, out Vector3 forwardDirection, out Vector3 leftDirection);  // 实际摩擦力方向得到前后左右
 			if (!leg.legData.stopped)
 			{
 				val += ApplyLegacyLateralMovementForces(leg, inputVector, forwardDirection, leftDirection);
 			}
-			val += ApplyLegacyTurningForce(leg, inputVector, leftDirection);
+			val += ApplyLegacyTurningForce(leg, inputVector, leftDirection); // 每个腿有额定的最大转向力
 			val += ApplyTurnDampingForce(leg, inputVector, leftDirection);
 			Vector3 val2 = val.get_normalized() - _rb.get_transform().get_up() * 0.3f;
 			val = val2.get_normalized() * val.get_magnitude();
@@ -488,29 +393,6 @@ namespace Simulation
 
 		private Vector3 ApplyTurnDampingForce(CubeLeg leg, Vector4 inputVector, Vector3 leftDirection)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0022: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0062: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0075: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0082: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0083: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0093: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00de: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e6: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fd: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fe: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 result = Vector3.get_zero();
 			if (Mathf.Abs(inputVector.x) <= 0.1f)
 			{
@@ -518,11 +400,15 @@ namespace Simulation
 				float num2 = num / 3f;
 				if (num2 > 0.01f)
 				{
-					result = ((!leg.legData.xInputFlipped) ? (ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce) * (0f - num2)) : (ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce) * (0f - num2)));
+					result = ((!leg.legData.xInputFlipped) ?  
+						(ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce) * (0f - num2)) : 
+						(ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce) * (0f - num2)));
 				}
 				else if (num2 < -0.01f)
 				{
-					result = ((!leg.legData.xInputFlipped) ? (ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce) * num2) : (ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce) * num2));
+					result = ((!leg.legData.xInputFlipped) ? 
+						(ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce) * num2) : 
+						(ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce) * num2));
 				}
 			}
 			return result;
@@ -530,28 +416,6 @@ namespace Simulation
 
 		private void CalculateLegacyMovementDirection(CubeLeg leg, out Vector3 forwardDirection, out Vector3 leftDirection)
 		{
-			//IL_0002: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0007: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0008: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0009: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0044: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0050: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0061: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0068: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0079: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0085: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0096: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a7: Unknown result type (might be due to invalid IL or missing references)
 			forwardDirection = (leftDirection = Vector3.get_zero());
 			switch (leg.legData.facingDirection)
 			{
@@ -576,50 +440,15 @@ namespace Simulation
 
 		private Vector3 ApplyLegacyLateralMovementForces(CubeLeg leg, Vector4 inputVector, Vector3 forwardDirection, Vector3 leftDirection)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0017: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0026: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0030: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0047: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0060: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0065: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0082: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0083: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0088: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00af: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d0: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ea: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ef: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0117: Unknown result type (might be due to invalid IL or missing references)
-			//IL_011a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0129: Unknown result type (might be due to invalid IL or missing references)
-			//IL_012f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0130: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0135: Unknown result type (might be due to invalid IL or missing references)
-			//IL_013a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0160: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0170: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0175: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0176: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 val = Vector3.get_zero();
-			val = ((inputVector.z > 0.1f) ? (val + ApplyLateralForceVector(leg, forwardDirection, leg.movement.maxLateralForce)) : ((!(inputVector.z < -0.1f)) ? (val + ApplyLateralDampingVector(leg, forwardDirection, leg.movement.lateralDampForce)) : (val + ApplyLateralForceVector(leg, -forwardDirection, leg.movement.maxLateralForce))));
+			val = ((inputVector.z > 0.1f) ? 
+				(val + ApplyLateralForceVector(leg, forwardDirection, leg.movement.maxLateralForce)) : 
+				(
+					(!(inputVector.z < -0.1f)) ? 
+					(val + ApplyLateralDampingVector(leg, forwardDirection, leg.movement.lateralDampForce)) : 
+					(val + ApplyLateralForceVector(leg, -forwardDirection, leg.movement.maxLateralForce))
+				)
+			);
 			if (inputVector.w > 0.1f)
 			{
 				val += ApplyLateralForceVector(leg, leftDirection, leg.movement.maxLateralForce);
@@ -639,53 +468,10 @@ namespace Simulation
 			return val;
 		}
 
-		private Vector3 ApplyLegacyTurningForce(CubeLeg leg, Vector4 inputVector, Vector3 leftDirection)
-		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0070: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0075: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0094: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0099: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c0: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00de: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00e7: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fd: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fe: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0100: Unknown result type (might be due to invalid IL or missing references)
-			Vector3 val = Vector3.get_zero();
-			float angularY = Vector3.Dot(_rb.get_angularVelocity(), _rb.get_transform().get_up());
-			float turningRatio = GetTurningRatio(angularY, inputVector.x, 3f);
-			if (inputVector.x > 0.1f)
-			{
-				val = ((!leg.legData.xInputFlipped) ? (val + ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce)) : (val + ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce)));
-			}
-			else if (inputVector.x < -0.1f)
-			{
-				val = ((!leg.legData.xInputFlipped) ? (val + ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce)) : (val + ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce)));
-			}
-			return val * turningRatio;
-		}
 
 		private float GetTurningRatio(float angularY, float turningInput, float maxAngularVelocity)
 		{
-			if (Mathf.Abs(angularY) < maxAngularVelocity || angularY * turningInput < 0f)
+			if (Mathf.Abs(angularY) < maxAngularVelocity || angularY * turningInput < 0f) // 角速度很小或者反向
 			{
 				return 1f;
 			}
@@ -694,36 +480,10 @@ namespace Simulation
 
 		private Vector3 ApplyStrafingLateralForce(CubeLeg leg, Vector4 inputVector)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0009: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0014: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0015: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0019: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0023: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0024: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0027: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0028: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0035: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0045: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0054: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0059: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0068: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006e: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 val = Vector3.get_zero();
 			val += ApplyStrafingForwardForce(leg, inputVector);
 			val += ApplyStrafingForwardDampingForce(leg, inputVector);
-			val += ApplyStrafingTurningForce(leg, inputVector);
+			val += ApplyStrafingTurningForce(leg, inputVector);  // 鼠标转向？
 			Vector3 val2 = val.get_normalized() - _rb.get_transform().get_up() * 0.3f;
 			val = val2.get_normalized() * val.get_magnitude();
 			return val;
@@ -731,35 +491,6 @@ namespace Simulation
 
 		private Vector3 ApplyStrafingForwardForce(CubeLeg leg, Vector4 inputVector)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0043: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0048: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0062: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0063: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0073: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0078: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0092: Unknown result type (might be due to invalid IL or missing references)
-			//IL_009e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00bf: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00dd: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00de: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 val = Vector3.get_zero();
 			Vector3 forwardMovementDirection = _strafeDirectionManager.forwardMovementDirection;
 			Vector3 rightMovementDirection = _strafeDirectionManager.rightMovementDirection;
@@ -784,81 +515,24 @@ namespace Simulation
 
 		private Vector3 ApplyStrafingForwardDampingForce(CubeLeg leg, Vector4 inputVector)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0043: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0047: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0059: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0060: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0065: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0070: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0074: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0086: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0092: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0097: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00eb: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f7: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fc: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0102: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0106: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0118: Unknown result type (might be due to invalid IL or missing references)
-			//IL_011e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_011f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0124: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0129: Unknown result type (might be due to invalid IL or missing references)
-			//IL_012a: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 val = Vector3.get_zero();
 			if (inputVector.z < 0.1f && inputVector.z > -0.1f && !_isRotating)
 			{
-				val = ((!leg.legData.xIsSideways) ? (val + ApplyLateralDampingVector(leg, leg.left, leg.movement.lateralDampForce)) : (val + ApplyLateralDampingVector(leg, leg.forward, leg.movement.lateralDampForce)));
+				val = ((!leg.legData.xIsSideways) ? 
+					(val + ApplyLateralDampingVector(leg, leg.left, leg.movement.lateralDampForce)) : 
+					(val + ApplyLateralDampingVector(leg, leg.forward, leg.movement.lateralDampForce)));
 			}
 			if (inputVector.x < 0.1f && inputVector.x > -0.1f && !_isRotating)
 			{
-				val = ((!leg.legData.xIsSideways) ? (val + ApplyLateralDampingVector(leg, leg.forward, leg.movement.lateralDampForce)) : (val + ApplyLateralDampingVector(leg, leg.left, leg.movement.lateralDampForce)));
+				val = ((!leg.legData.xIsSideways) ? 
+					(val + ApplyLateralDampingVector(leg, leg.forward, leg.movement.lateralDampForce)) : 
+					(val + ApplyLateralDampingVector(leg, leg.left, leg.movement.lateralDampForce)));
 			}
 			return val;
 		}
 
 		private Vector3 ApplyStrafingTurningForce(CubeLeg leg, Vector4 inputVector)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0096: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0099: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00aa: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00af: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c9: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ce: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00d3: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f4: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f7: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0108: Unknown result type (might be due to invalid IL or missing references)
-			//IL_010d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0112: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0118: Unknown result type (might be due to invalid IL or missing references)
-			//IL_011b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0127: Unknown result type (might be due to invalid IL or missing references)
-			//IL_012c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0131: Unknown result type (might be due to invalid IL or missing references)
-			//IL_014d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0150: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0155: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0156: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 val = Vector3.get_zero();
 			if (_strafeDirectionManager.IsAngleToStraightGreaterThanThreshold())
 			{
@@ -869,11 +543,15 @@ namespace Simulation
 				num *= GetTurningRatio(angularY, 0f - angleToStraight, 3f);
 				if (angleToStraight < 0f)
 				{
-					val = ((!leg.legData.xInputFlipped) ? (val + ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce)) : (val + ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce)));
+					val = ((!leg.legData.xInputFlipped) ? 
+						(val + ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce)) : 
+						(val + ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce)));
 				}
 				else if (angleToStraight > 0f)
 				{
-					val = ((!leg.legData.xInputFlipped) ? (val + ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce)) : (val + ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce)));
+					val = ((!leg.legData.xInputFlipped) ? 
+						(val + ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce)) : 
+						(val + ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce)));
 				}
 				if ((double)Mathf.Abs(inputVector.x) < 0.1)
 				{
@@ -883,24 +561,33 @@ namespace Simulation
 			return val;
 		}
 
-		private Vector3 ApplyLateralForceVector(CubeLeg leg, Vector3 vector, float maxForce)
+        private Vector3 ApplyLegacyTurningForce(CubeLeg leg, Vector4 inputVector, Vector3 leftDirection)
+        {
+            Vector3 val = Vector3.get_zero();
+            float angularY = Vector3.Dot(_rb.get_angularVelocity(), _rb.get_transform().get_up());
+            float turningRatio = GetTurningRatio(angularY, inputVector.x, 3f);  // 当前角速度越大越小，最大1
+            if (inputVector.x > 0.1f)
+            {
+                val = ((!leg.legData.xInputFlipped) ?  // 前轮后轮决定其是否反向
+                    (val + ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce)) :
+                    (val + ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce)));
+            }
+            else if (inputVector.x < -0.1f)
+            {
+                val = ((!leg.legData.xInputFlipped) ?
+                    (val + ApplyLateralForceVector(leg, leftDirection, leg.movement.maxTurningForce)) :
+                    (val + ApplyLateralForceVector(leg, -leftDirection, leg.movement.maxTurningForce)));
+            }
+            return val * turningRatio;
+        }
+
+        private Vector3 ApplyLateralForceVector(CubeLeg leg, Vector3 vector, float maxForce)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0002: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0007: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0008: Unknown result type (might be due to invalid IL or missing references)
 			return vector * maxForce;
 		}
 
 		private Vector3 ApplyLateralDampingVector(CubeLeg leg, Vector3 direction, float damping, Color color = default(Color))
 		{
-			//IL_0006: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0042: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0043: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0049: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004f: Unknown result type (might be due to invalid IL or missing references)
 			float num = Vector3.Dot(leg.legData.currentVelocity, direction);
 			float num2 = CalculateLateralDampingMultiplier(leg.maxSpeed, num);
 			float num3 = Mathf.Clamp(damping * (num * num2), 0f - leg.movement.maxDampingForce, leg.movement.maxDampingForce);
@@ -964,26 +651,10 @@ namespace Simulation
 
 		private Vector3 ApplyStoppedForce(CubeLeg leg)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0021: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0030: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0035: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0041: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0044: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0049: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004a: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0056: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00ce: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00cf: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00da: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 zero = Vector3.get_zero();
 			if (leg.legData.stopped)
 			{
-				Vector3 val = _rb.get_velocity() + Physics.get_gravity() * Time.get_fixedDeltaTime();
+				Vector3 val = _rb.get_velocity() + Physics.get_gravity() * Time.get_fixedDeltaTime(); // 自由落体下一帧的速度
 				Vector3 velocity = _rb.get_velocity();
 				Vector3 normalized = velocity.get_normalized();
 				float num = Vector3.Dot(normalized, _rb.get_transform().get_up());
@@ -1088,14 +759,6 @@ namespace Simulation
 
 		private Vector3 ApplySwaggerForce(CubeLeg leg)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0005: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0037: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_004c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0051: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0052: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 result = Vector3.get_zero();
 			if (!leg.legData.stopped && !leg.legGraphics.isAnimating)
 			{
@@ -1106,10 +769,6 @@ namespace Simulation
 
 		private void ProcessJumpForce(float deltaTime)
 		{
-			//IL_00d5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00da: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fc: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0103: Unknown result type (might be due to invalid IL or missing references)
 			bool flag = false;
 			bool flag2 = true;
 			for (int i = 0; i < _legs.Count; i++)
@@ -1117,13 +776,13 @@ namespace Simulation
 				flag |= _legs[i].legData.jumping;
 				flag2 &= _legs[i].legData.canJump;
 			}
-			if (!flag)
+			if (!flag)  // 没有正在跳
 			{
 				if (_jumpForcePending && flag2)
 				{
 					_jumpForcePending = false;
 					_justJumped = true;
-					RobotJumped();
+					RobotJumped();  // 设jumping = true;
 					float num = 0f;
 					for (int j = 0; j < _legs.Count; j++)
 					{
@@ -1133,7 +792,7 @@ namespace Simulation
 					float num3 = 2f * num2;
 					Vector3 gravity = Physics.get_gravity();
 					float num4 = Mathf.Sqrt(num3 * gravity.get_magnitude());
-					_rb.AddForce(_rb.get_transform().get_up() * num4, 2);
+					_rb.AddForce(_rb.get_transform().get_up() * num4, 2); // 应该是速度
 				}
 			}
 			else
@@ -1164,27 +823,6 @@ namespace Simulation
 
 		private void ProcessInAirRotation(float deltaTime)
 		{
-			//IL_0077: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0088: Unknown result type (might be due to invalid IL or missing references)
-			//IL_008d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0091: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0096: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f7: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fc: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0107: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0111: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0116: Unknown result type (might be due to invalid IL or missing references)
-			//IL_011b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0129: Unknown result type (might be due to invalid IL or missing references)
-			//IL_012b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0130: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0132: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0137: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0177: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0179: Unknown result type (might be due to invalid IL or missing references)
-			//IL_022b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0231: Unknown result type (might be due to invalid IL or missing references)
 			bool flag = false;
 			for (int i = 0; i < _legs.Count; i++)
 			{
@@ -1194,9 +832,9 @@ namespace Simulation
 					break;
 				}
 			}
-			if (!flag && _rb != null)
+			if (!flag && _rb != null)  // 没有着地
 			{
-				float num = Time.get_realtimeSinceStartup() - _timeLastGrounded;
+				float num = Time.get_realtimeSinceStartup() - _timeLastGrounded;  // 离地多久
 				if (!(num < _inAirRotationFullDuration + _inAirRotationFadeDuration))
 				{
 					return;
@@ -1243,7 +881,7 @@ namespace Simulation
 				}
 				_rb.AddRelativeTorque(zero * ((float)Math.PI / 180f), 2);
 			}
-			else
+			else  // 
 			{
 				_timeLastGrounded = Time.get_realtimeSinceStartup();
 			}

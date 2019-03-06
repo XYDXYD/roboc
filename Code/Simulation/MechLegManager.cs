@@ -138,22 +138,6 @@ namespace Simulation
 
 		protected void UpdateGroundedOnItself(CubeMechLeg leg)
 		{
-			//IL_0015: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0021: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0026: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0049: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0051: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0057: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00c8: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00cd: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00da: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00df: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00f5: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00fa: Unknown result type (might be due to invalid IL or missing references)
-			//IL_010b: Unknown result type (might be due to invalid IL or missing references)
 			float num = leg.colliders[0].get_radius() * 2f;
 			Vector3 hitPoint = leg.position + leg.down * num;
 			Byte3 value = (Byte3)GridScaleUtility.WorldToGrid(leg.get_transform().get_localPosition(), TargetType.Player);

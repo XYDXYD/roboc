@@ -305,23 +305,6 @@ namespace Simulation
 
 		internal void UpdateCachedValues()
 		{
-			//IL_0007: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0018: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0020: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0031: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0042: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0047: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0058: Unknown result type (might be due to invalid IL or missing references)
-			//IL_005d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_006e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_007f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0090: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0095: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a1: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00a7: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b2: Unknown result type (might be due to invalid IL or missing references)
-			//IL_00b7: Unknown result type (might be due to invalid IL or missing references)
 			position = T.get_position();
 			Quaternion rotation = T.get_rotation();
 			this.rotation = rotation.get_eulerAngles();
@@ -336,19 +319,6 @@ namespace Simulation
 
 		internal void UpdateForcePoint(Vector3 worldCenterOfMass)
 		{
-			//IL_0000: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0002: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0007: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000f: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001c: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0022: Unknown result type (might be due to invalid IL or missing references)
-			//IL_002d: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0032: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0038: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003e: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0043: Unknown result type (might be due to invalid IL or missing references)
 			Vector3 val = worldCenterOfMass - position;
 			float num = Vector3.Dot(val, up);
 			forcePoint = position + forward * footOffsetToLegBase + up * num;
